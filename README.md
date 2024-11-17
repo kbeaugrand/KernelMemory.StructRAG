@@ -1,5 +1,11 @@
 # Struct RAG search client for KernelMemory
 
+[![Build & Test](https://github.com/kbeaugrand/SemanticKernel.Assistants/actions/workflows/build_tests.yml/badge.svg)](https://github.com/kbeaugrand/SemanticKernel.Assistants/actions/workflows/build_test.yml)
+[![Create Release](https://github.com/kbeaugrand/SemanticKernel.Assistants/actions/workflows/publish.yml/badge.svg)](https://github.com/kbeaugrand/SemanticKernel.Assistants/actions/workflows/publish.yml)
+[![Version](https://img.shields.io/github/v/release/kbeaugrand/SemanticKernel.Assistants)](https://img.shields.io/github/v/release/kbeaugrand/SemanticKernel.Assistants)
+[![License](https://img.shields.io/github/license/kbeaugrand/SemanticKernel.Assistants)](https://img.shields.io/github/v/release/kbeaugrand/SemanticKernel.Assistants)
+
+
 > Note: Freely inspired from [StructRag](https://arxiv.org/abs/2410.08815), this is an implemention of a custom seach client for [Kernel Memory](https://github.com/microsoft/kernel-memory).
 
 

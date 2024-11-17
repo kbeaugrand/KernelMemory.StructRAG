@@ -1,0 +1,16 @@
+Instruction: 
+Extract complete relevant tables from Raw Content based on the requirements described in the Requirement.
+Note that when building a table, it is important to retain the table title and source information, such as which company and report the table comes from.
+
+Hints:
+Firstly, identify the keywords in the Requirement, including entity names and attribute names, and then extract them from the Raw Content based on these keywords.
+If the Raw Content does not contain the information required by the Requirement, then extract the small amount of information most relevant to the Requirement from the Raw Content
+3. When analyzing Requirements and extracting Raw Content, do not translate and maintain the original language
+
+Raw Content:
+{{$content}}
+
+Requirement:
+{{$instruction}}
+
+Output:

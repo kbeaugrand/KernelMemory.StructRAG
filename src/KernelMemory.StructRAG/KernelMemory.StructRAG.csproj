@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Prompts\StructRAG\ConstructAlgorithm.txt" />
+    <None Remove="Prompts\StructRAG\ConstructCatalogue.txt" />
+    <None Remove="Prompts\StructRAG\ConstructGraph.txt" />
+    <None Remove="Prompts\StructRAG\ConstructTable.txt" />
+    <None Remove="Prompts\StructRAG\Decompose.txt" />
+    <None Remove="Prompts\StructRAG\Merge.txt" />
+    <None Remove="Prompts\StructRAG\Route.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Prompts\StructRAG\ConstructAlgorithm.txt">
+      <CustomToolNamespace></CustomToolNamespace>
+      <LogicalName>$([System.String]::new('%(RelativeDir)').Replace('\','/'))%(FileName)%(Extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Prompts\StructRAG\ConstructCatalogue.txt">
+      <CustomToolNamespace></CustomToolNamespace>
+      <LogicalName>$([System.String]::new('%(RelativeDir)').Replace('\','/'))%(FileName)%(Extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Prompts\StructRAG\ConstructGraph.txt">
+      <CustomToolNamespace></CustomToolNamespace>
+      <LogicalName>$([System.String]::new('%(RelativeDir)').Replace('\','/'))%(FileName)%(Extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Prompts\StructRAG\ConstructTable.txt">
+      <CustomToolNamespace></CustomToolNamespace>
+      <LogicalName>$([System.String]::new('%(RelativeDir)').Replace('\','/'))%(FileName)%(Extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Prompts\StructRAG\Decompose.txt">
+      <CustomToolNamespace></CustomToolNamespace>
+      <LogicalName>$([System.String]::new('%(RelativeDir)').Replace('\','/'))%(FileName)%(Extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Prompts\StructRAG\Merge.txt">
+      <CustomToolNamespace></CustomToolNamespace>
+      <LogicalName>$([System.String]::new('%(RelativeDir)').Replace('\','/'))%(FileName)%(Extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Prompts\StructRAG\Route.txt">
+      <CustomToolNamespace></CustomToolNamespace>
+      <LogicalName>$([System.String]::new('%(RelativeDir)').Replace('\','/'))%(FileName)%(Extension)</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.KernelMemory.Abstractions" Version="0.92.241112.1" />
+    <PackageReference Include="Microsoft.KernelMemory.Core" Version="0.92.241112.1" />
+  </ItemGroup>
+
+</Project>

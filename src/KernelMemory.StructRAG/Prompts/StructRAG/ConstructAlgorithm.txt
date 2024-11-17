@@ -1,0 +1,128 @@
+Instruction:
+Extract the required algorithmic pseudocode from Raw Content based on the requirements described in the Requirement
+It is required to follow the thinking method and output format in Examples, and each action in the pseudocode should be associated with specific information in the original document
+Note that if the requirements described in the Requirement cannot be solved in the form of pseudocode, do not forcefully write pseudocode. You can directly list the information that can solve the requirements
+
+Examples:
+#################
+#################
+Requirement:
+Given the document set: Intel CPU user manual, Huawei CPU user manual, Apple CPU user manual, Huawei monitor user manual, graphics card manual, host manual, fan manual, and more, extract the necessary algorithm pseudo-code for assembling a computer based on user-customized requirements.
+
+Raw Content:
+Intel CPU user manual: Our CPU features high performance, advanced multi-core processing, and power efficiency.
+Huawei CPU user manual: The Huawei CPU offers excellent thermal management and AI-powered multitasking.
+Apple CPU user manual: Apple CPUs are known for their efficiency in graphics rendering and seamless integration with macOS.
+Huawei monitor user manual: Huawei monitors offer high refresh rate (144Hz) and excellent color accuracy.
+Graphics card manual: The graphics card supports high resolution and fast processing for gaming. Models include:
+GTX 1650: Mid-range graphics card suitable for light gaming.
+RTX 3060: High-performance card for gaming and content creation with ray tracing support and DLSS technology for improved performance.
+RTX 4090: Top-tier card for gaming at ultra settings and 4K resolution with ray tracing support and DLSS technology.
+Host manual: The host supports modular installation of various components with different color and material options.
+Options: Mid-tower, Full-tower, RGB lighting, black, white, or custom colors and materials (glass, metal, plastic).
+Fan manual: The fan provides optimal cooling for high-performance CPUs, available in different sizes:
+120mm: Standard cooling for general use and light gaming applications with low noise levels ....
+140mm: High-efficiency cooling for overclocked systems and high-performance gaming with moderate noise levels ....
+.......
+
+Output:
+1. Initialize components:
+   - Intel_CPU = "Intel high performance multi-core CPU"
+   - Huawei_CPU = "Huawei AI-powered multitasking CPU with thermal management"
+   - Apple_CPU = "Apple efficient CPU with seamless macOS integration"
+   - Huawei_Monitor = "Huawei 144Hz, color-accurate monitor"
+   - Standard_Monitor = "Standard 60Hz monitor"
+   - GTX_1650 = "GTX 1650 mid-range graphics card"
+   - RTX_3060 = "RTX 3060 high-performance graphics card"
+   - RTX_4090 = "RTX 4090 top-tier graphics card"
+   - Host_Mid_Tower = "Mid-tower modular host"
+   - Host_Full_Tower = "Full-tower modular host"
+   - Host_RGB_Tower = "RGB-lit tower"
+   - Fan_120mm = "120mm standard cooling fan"
+   - Fan_140mm = "140mm high-efficiency fan"
+2. Evaluate user requirements:
+   if need high-performance CPU:
+      - IF user needs high refresh rate display:
+         - selected_CPU = Intel_CPU # According to original content, Intel CPU is high performance
+         - selected_monitor = Huawei_Monitor # According to original content, Huawei monitor offers high refresh rate
+         - IF user needs ultra-high graphics performance (4K gaming): # According to original content, RTX 4090 is top-tier card for 4K gaming
+            - selected_GPU = RTX_4090 # According to original content，RTX 4090 is top-tier card for 4K gaming
+            - install(selected_CPU) 
+            - install(selected_monitor)
+            - install(selected_GPU)
+            - install(Host_Full_Tower)  
+            - install(Fan_140mm)   
+         ELSE IF user needs solid gaming performance (1080p to 1440p): # According to original content, RTX 3060 is high-performance card for gaming
+            - selected_GPU = RTX_3060 # According to original content, RTX 3060 is high-performance card for gaming
+            - install(selected_CPU)
+            - install(selected_monitor)
+            - install(selected_GPU)
+            - install(Host_Mid_Tower)   
+            - install(Fan_120mm)      
+         ELSE:
+            - selected_GPU = GTX_1650  # According to original content, GTX 1650 is mid-range card suitable for light gaming
+            - install(selected_CPU)
+            - install(selected_monitor)
+            - install(selected_GPU)
+            - install(Host_Mid_Tower)
+            - install(Fan_120mm)
+      ELSE IF user prefers general high performance without high refresh rate: # According to original content, Huawei CPU offers thermal management and multitasking
+         - selected_CPU = Intel_CPU # According to original content, Intel CPU is high performance
+         - selected_monitor = Standard_Monitor # According to original content, standard monitor is 60Hz
+         - selected_GPU = GTX_1650   
+         - install(selected_CPU)
+         - install(selected_monitor)
+         - install(selected_GPU)
+         - install(Host_Mid_Tower)
+         - install(Fan_120mm)
+   ELSE IF need thermal management and multitasking CPU: # According to original content, Huawei CPU offers thermal management and multitasking
+      - selected_CPU = Huawei_CPU # According to original content, Huawei CPU offers thermal management and multitasking
+      IF user needs efficient graphics: # According to original content, RTX 3060 is high-performance card for gaming and content creation
+         - selected_GPU = RTX_3060 # According to original content, RTX 3060 is high-performance card for gaming and content creation
+         - install(selected_CPU)
+         - install(selected_GPU)
+         - install(Host_Mid_Tower)
+         - install(Fan_140mm)    
+      ELSE: 
+         - selected_GPU = GTX_1650  # According to original content, GTX 1650 is mid-range card suitable for light gaming
+         - install(selected_CPU)
+         - install(selected_GPU)
+         - install(Host_Mid_Tower)
+         - install(Fan_120mm)
+   ELSE IF need macOS integration and efficiency: # According to original content, Apple CPU is efficient with macOS integration
+      - selected_CPU = Apple_CPU # According to original content, Apple CPU is efficient with macOS integration
+      IF user needs efficient graphics rendering: # According to original content, RTX 3060 is high-performance card for gaming and content creation
+         - selected_GPU = RTX_3060  # According to original content, RTX 3060 is high-performance card for gaming and content creation
+         - install(selected_CPU)
+         - install(selected_GPU)
+         - install(Host_Mid_Tower)  
+         - install(Fan_120mm)       
+      ELSE:
+         - selected_GPU = GTX_1650  # According to original content, GTX 1650 is mid-range card suitable for light gaming
+         - install(selected_CPU)
+         - install(selected_GPU)
+         - install(Host_Mid_Tower)
+         - install(Fan_120mm)
+3. Evaluate aesthetics and color preferences:
+   IF user prefers RGB lighting: # According to original content, RGB lighting is an option for the host
+      - selected_host = Host_RGB_Tower
+   ELSE IF user prefers a sleek design: # According to original content, black and white are color options for the host
+      - selected_host = Host_Full_Tower
+   ELSE:
+      - selected_host = Host_Mid_Tower
+4. Final system check:
+   - power_on()
+   - verify_CPU_performance()
+   - verify_display_quality()
+   - test_GPU_performance()
+   - check_fan_speed_and_efficiency()
+#################
+#################
+
+Requirement:
+{{$instruction}}
+
+Raw Content:
+{{$raw_content}}
+
+Output:
