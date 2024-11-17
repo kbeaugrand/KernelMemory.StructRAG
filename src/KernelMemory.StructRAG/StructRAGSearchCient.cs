@@ -120,7 +120,7 @@ public sealed class StructRAGSearchCient : ISearchClient
 
     private async Task<string> Router(string question, IEnumerable<MemoryRecord> records, IContext? context, CancellationToken cancellationToken = default)
     {
-        var prompt = GetSKPrompt("StructRag", "Route")
+        var prompt = GetSKPrompt("StructRAG", "Route")
             .Replace("{{$query}}", question)
             .Replace("{{$titles}}", string.Join(" ", records.DistinctBy(c => c.GetDocumentId()).Select(c => c.GetFileName())));
 
@@ -173,7 +173,7 @@ public sealed class StructRAGSearchCient : ISearchClient
                 throw new InvalidOperationException();
         }
 
-        var prompt = GetSKPrompt("StructRag", promptName)
+        var prompt = GetSKPrompt("StructRAG", promptName)
             .Replace("{{$instruction}}", question)
             .Replace("{{$raw_content}}", chunks);
 
@@ -190,7 +190,7 @@ public sealed class StructRAGSearchCient : ISearchClient
 
     private async Task<IEnumerable<string>> DecomposeAsync(string instruction, string info, IContext? context, CancellationToken cancellationToken = default)
     {
-        var prompt = GetSKPrompt("StructRag", "Decompose")
+        var prompt = GetSKPrompt("StructRAG", "Decompose")
             .Replace("{{$query}}", instruction)
             .Replace("{{$kb_info}}", info);
 
@@ -255,7 +255,7 @@ public sealed class StructRAGSearchCient : ISearchClient
 
     private async Task<string> MergeAsync(string chosen, string question, IEnumerable<(string subquery, string subknowledge)> knowledges, IContext? context = null, CancellationToken cancellationToken = default)
     {
-        var prompt = GetSKPrompt("StructRag", "Merge")
+        var prompt = GetSKPrompt("StructRAG", "Merge")
             .Replace("{{$query}}", question)
             .Replace("{{$subknowledges}}", string.Join(Environment.NewLine, knowledges.Select(c => $"Subquery: {c.subquery}\nRetrieval results:\n{c.subknowledge}\n\n")));
 
