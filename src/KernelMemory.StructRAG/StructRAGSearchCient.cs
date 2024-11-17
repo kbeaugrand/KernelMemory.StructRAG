@@ -105,7 +105,7 @@ public sealed class StructRAGSearchCient : ISearchClient
 
     private async Task<IEnumerable<MemoryRecord>> GetSimilarRecordsAsync(string index, string question, ICollection<MemoryFilter>? filters = null, double minRelevance = 0, CancellationToken cancellationToken = default)
     {
-        var chunks = this._memoryDb.GetSimilarListAsync(index, question, filters, minRelevance, limit: 50, false, cancellationToken)
+        var chunks = this._memoryDb.GetSimilarListAsync(index, question, filters, minRelevance, limit: this._config.MaxMatchesCount, false, cancellationToken)
                                          .ConfigureAwait(false);
 
         var result = new List<MemoryRecord>();
