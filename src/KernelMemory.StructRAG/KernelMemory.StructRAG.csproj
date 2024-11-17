@@ -16,6 +16,14 @@
     <None Remove="Prompts\StructRAG\Route.txt" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <!-- NuGet Package Settings -->
+    <Title>Kernel Memory StructRAG seach client</Title>
+    <Description>
+      Microsoft's Kernel Memory StructRAG implementation
+    </Description>
+  </PropertyGroup>
+
   <ItemGroup>
     <EmbeddedResource Include="Prompts\StructRAG\ConstructAlgorithm.txt">
       <CustomToolNamespace></CustomToolNamespace>
