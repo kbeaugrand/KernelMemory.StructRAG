@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
     <None Remove="Prompts\StructRAG\ConstructAlgorithm.txt" />
     <None Remove="Prompts\StructRAG\ConstructCatalogue.txt" />
     <None Remove="Prompts\StructRAG\ConstructGraph.txt" />
@@ -19,7 +20,7 @@
   <PropertyGroup>
     <!-- NuGet Package Settings -->
     <Title>Kernel Memory StructRAG seach client</Title>        
-    <PackageReadmeFile>../README.md</PackageReadmeFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <Description>
       Microsoft's Kernel Memory StructRAG implementation
     </Description>
