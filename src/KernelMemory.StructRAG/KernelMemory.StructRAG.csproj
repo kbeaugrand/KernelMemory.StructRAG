@@ -18,7 +18,8 @@
 
   <PropertyGroup>
     <!-- NuGet Package Settings -->
-    <Title>Kernel Memory StructRAG seach client</Title>
+    <Title>Kernel Memory StructRAG seach client</Title>        
+    <PackageReadmeFile>../README.md</PackageReadmeFile>
     <Description>
       Microsoft's Kernel Memory StructRAG implementation
     </Description>
