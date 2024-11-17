@@ -1,0 +1,47 @@
+Instruction:
+To generate answers to questions based on documents, I need to structure the documents as a table, graph, or chunk. 
+Generally speaking, statistical questions prefer tables, chain reasoning questions prefer graphs, and single-hop QA questions prefer chunks. 
+Now, given the following document information and question, please determine which type of knowledge structure I should use. 
+Simply output one of the three words: table, graph, or chunk, without providing any further explanation.
+
+Examples:
+=================
+=================
+Doc Info:
+"2024 Financial Report"
+
+Query:
+......What is the amount of Mango Excellent Media's trading financial assets? Please read the financial statements of the above-mentioned companies and answer the following questions based only on the content seen above. You can ignore parts related to financial reports that are not mentioned in the questions and only answer the other parts.
+
+Output:
+table
+
+=================
+Doc Info:
+"Judgment Document 1" "Judgment Document 2" "Judgment Document 3" "Judgment Document 4" "Judgment Document 5"
+
+Query:
+......Which judgment document among the above has the cause of action as 'Administrative Action - Administrative Registration'? Please answer the question based only on the judgment documents seen above, and simply provide the title of the judgment document that meets the criteria. Based solely on the content seen in the judgment documents, I will give you several judgment results: {'Judgment Result 1': '1. Uphold the decision of the Xiejiaji District People’s Court of Huainan City, Anhui Province (20....', 'Judgment Result 2': 'Dismiss the appeal and uphold the original judgment.\nThe second-instance case acceptance fee is 13,800 yuan,....', 'Judgment Result 3': 'Uphold the civil judgment of the Third Intermediate People’s Court of Tianjin (2020) Jin 03 Min Zhong 4850 No.\nThis judgment is final.', 'Judgment Result 4': 'Dismiss the appeal and uphold the original judgment.\nThe second-instance case acceptance fee is 50 yuan, to be borne by the appellant Li (the appellant has prepaid).\nThis judgment is final.'}. You need to determine which judgment result is the most likely for all the above judgment documents. Please output in the following JSON format: {"Judgment Document 1": "Judgment Result a", "Judgment Document 2": "Judgment Result b", "Judgment Document 3": "Judgment Result c"} Only provide the judgment document titles and judgment result numbers; specific content output is not required.
+
+Output:
+chunk
+
+=================
+Doc Info:
+Patchscopes: A Unifying Framework for Inspecting Hidden Representations of Language Models\n Llama: Efficient Permutation Importance Sampling\n Vicuna: Visual Contextualization and Navigation for Large-scale Codebases
+
+Query:
+'#Papers:\n......\n\nWe hope you will carefully study the provided papers and determine the citation relationships between them. Please follow the instructions below strictly to complete the task:\n\n#Specific Requirements:\n1. Reference: When a given paper mentions other provided papers, those other papers are considered as "references" for the given paper. To summarize in this specific context, references are about what the given paper is using.\n2. Citation: Conversely, when other provided papers mention the given paper in their works, the given paper is being "cited" by those other papers. To summarize in this specific context, citations are about who is using the given paper.\n3. Given a paper, you need to determine the citation or reference relationship between this paper and the other papers. Do not consider papers that are not provided.\n3. Please present the paper titles in a json format as follows: {{"Reference":["Reference Title 1", "Reference Title 2", ..., "Reference Title n"], "Citation":["Citation Title 1", "Citation Title 2", ..., "Citation Title n"]}}.\n4. If a paper does not have any references or citations, please leave the corresponding list empty, e.g.{{"Refernce":[]}}, {{"Citation":[]}}.\n\n#The paper you need to analyze:\nPatchscopes: A Unifying Framework for Inspecting Hidden Representations of Language Models'
+
+Output:
+graph
+=================
+=================
+
+Doc Info:
+{{$titles}}
+
+Query:
+{{$query}}
+
+Output:

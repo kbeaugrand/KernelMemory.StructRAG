@@ -1,0 +1,65 @@
+Instruction:
+In order to solve complex document-related problems, you need to break down the given Query into multiple relatively simple and independent sub-problems.
+
+Requirement:
+1. Doc Info is a description of the document information. You can reference this information to implement the breakdown.
+2. If the given problem is already simple enough or there is no way to break it down, then no breakdown is needed.
+3. Follow the output format and thought process in the Examples, and do not provide any additional explanatory notes.
+
+Examples:
+#################
+#################
+Doc Info:
+The titles of the docs are: "Judgment Document 7"\n"Judgment Document 3"\n"Judgment Document 2"\n"Judgment Document 4"\n"Judgment Document 6"\n"Judgment Document 8"\n"Judgment Document 5"\n"Judgment Document 1"
+
+Query:
+... Please read the above judgment documents and classify all the judgment documents according to the following 6 types of case causes: 'Property Dispute', 'Administrative Entity - Labor and Social Security Administration (Labor, Social Security)', 'Cause for Execution - Administrative Non-Litigation Execution', 'Corruption and Bribery', 'Cause for Execution - Other Causes', and 'Administrative Action - Administrative Payment'. You only need to output the title of each judgment document, following the format below with titles as per the judgment documents provided:\n{{'Property Dispute': ['Judgment Document a', 'Judgment Document b'], 'Administrative Entity - Labor and Social Security Administration (Labor, Social Security)': ['Judgment Document a', 'Judgment Document b'], 'Cause for Execution - Administrative Non-Litigation Execution': ['Judgment Document a', 'Judgment Document b'], 'Corruption and Bribery': ['Judgment Document a', 'Judgment Document b'], 'Cause for Execution - Other Causes': ['Judgment Document a', 'Judgment Document b'], 'Administrative Action - Administrative Payment': ['Judgment Document a', 'Judgment Document b']}}\nYour answer is:
+
+Output:
+determine whether the cause of each given judgment document is 'Property Dispute', 
+determine whether the cause of each given judgment document is 'Administrative Entity - Labor and Social Security Administration (Labor, Social Security)', 
+determine whether the cause of each given judgment document is 'Cause for Execution - Administrative Non-Litigation Execution', 
+determine whether the cause of each given judgment document is 'Corruption and Bribery', 
+determine whether the cause of each given judgment document is 'Cause for Execution - Other Causes', 
+determine whether the cause of each given judgment document is 'Administrative Action - Administrative Payment'.
+
+#################
+Doc Info:
+The titles of the docs are: "Judgment Document 7"\n"Judgment Document 3"\n"Judgment Document 1"\n"Judgment Document 2"\n"Judgment Document 4"\n"Judgment Document 5"\n\n"Judgment Document 6"
+
+Query:
+...... Based solely on the judgment documents seen above, answer the following question.\n\nRead the above judgment documents, and I will provide you with several judgment results: {{\'Judgment Result 1\': \'1. Uphold the decision of the Huainan Xiejiaji District People's Court of Anhui Province 20....\', \'Judgment Result 2\': \'Dismiss the appeal and uphold the original judgment.\\nThe second-instance case acceptance fee is 13,800 yuan,....', \'Judgment Result 3\': \'Uphold the Civil Judgement No. 4850 (2020) of the Tianjin Third Intermediate People's Court.\\nThis judgment is final.\', \'Judgment Result 4\': \'Dismiss the appeal and uphold the original judgment.\\nThe second-instance case acceptance fee is 50 yuan, paid by the appellant Li (prepaid by the appellant).\\nThis judgment is final.\'}}.\nYou need to determine which judgment result is most likely for each of the above judgment documents. Please output in the following JSON format:\n{{"Judgment Document 1":"Judgment Result a", "Judgment Document 2":"Judgment Result b", "Judgment Document 3":"Judgment Result c"}}\nOnly provide the judgment document titles and the judgment result numbers, not the specific content.\nPlease directly provide the answer:
+
+Output:
+I will provide you with several judgment results: {{\'Judgment Result 1\': \'1. Uphold the decision of the Huainan Xiejiaji District People's Court of Anhui Province 20....\', \'Judgment Result 2\': \'Dismiss the appeal and uphold the original judgment.\\nThe second-instance case acceptance fee is 13,800 yuan,....', \'Judgment Result 3\': \'Uphold the Civil Judgement No. 4850 (2020) of the Tianjin Third Intermediate People's Court.\\nThis judgment is final.\', \'Judgment Result 4\': \'Dismiss the appeal and uphold the original judgment.\\nThe second-instance case acceptance fee is 50 yuan, paid by the appellant Li (prepaid by the appellant).\\nThis judgment is final.\'}}.\nYou need to determine which judgment result is most likely for the given judgment document.
+
+#################
+Doc Info:
+The titles of the docs are: "2020 Report"\n"2025 Fourth Quarter Report"
+
+Query:
+... Please answer which company has the highest 'Total Owner's Equity'?
+
+Output:
+Identify the company with the highest 'Total Owner's Equity'.
+
+#################
+Doc Info:
+The titles of the docs are: "WHEN LLMs MEET CYberSECURITY: A SYStEMATIC LITERATURE REVIEW"\n"Generative AI and Large Language Models for Cyber Security: All Insights You Need"\n"LLM4Vuln: A Unified Evaluation Framework for Decoupling and Enhancing LLMs' Vulnerability Reasoning"
+
+Query:
+...Paper: OpenMoE: An Early Effort on Open Mixture-of-Experts Language Models. "instruction": We hope you will carefully study the provided papers and determine the citation relationships between them......
+
+Output:
+Find the required triples with entities as the given papers and the relationship as citation.
+
+#################
+#################
+
+Doc Info:
+{{$kb_info}}
+
+Query:
+{{$query}}
+
+Output:

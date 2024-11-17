@@ -1,0 +1,10 @@
+Instruction:
+1. Answer the Question based on retrieval results.
+2. Find the relevant information from given retrieval results and output as detailed, specific, and lengthy as possible.
+3. The output must be a coherent and smooth piece of text.
+
+Question:
+{{$query}}
+
+Retrieval:
+{{$subknowledges}}

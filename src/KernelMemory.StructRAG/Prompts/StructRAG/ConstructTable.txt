@@ -1,0 +1,71 @@
+Instruction:
+Extract the required directory structure from Raw Content based on the requirements described in the Requirement, which is a hierarchical summary. The number of layers and the number of nodes in each layer are determined according to specific circumstances.
+Please follow the thinking style and output format in Examples, and note that each level of Summary needs to have a number to distinguish between different levels. And each summary needs to be very detailed.
+Note that you need to extract as much relevant information as possible from the Raw Content based on the entity names and person names mentioned in the Retirement, in order to build a complete directory structure.
+
+Examples:
+#################
+#################
+Requirement:
+Query is How do guests perceive the impact of privacy laws on technology development?, please extract relevant catalogues from the document based on the Query.
+
+Raw Content:
+Episode 48 - Randall Munroe
+RANDALL MUNROE: Then fell into doing comics where I can spend all day diving into some rabbit hole, and then draw comics about it. And then the next day, move on to a different thing. I found a way to grab all the candy in the candy store.
+KEVIN SCOTT: Hi, everyone. Welcome to Behind the Tech. I’m your host, Kevin Scott, Chief Technology Officer for Microsoft. 
+In this podcast, we’re going to get behind the tech. We’ll talk with some of the people who have made our modern tech world possible and understand what motivated them to create what they did. So, join me to maybe learn a little bit about the history of computing and get a few behind-the-scenes insights into what’s happening today. Stick around.
+CHRISTINA WARREN: Hello, and welcome to Behind the Tech. I’m Christina Warren, Senior Developer Advocate at GitHub.
+KEVIN SCOTT: And I’m Kevin Scott.
+CHRISTINA WARREN: And today, we have a super exciting guest with us, Randall Munroe. He’s famous for creating the webcomic xkcd
+KEVIN SCOTT: Yeah, it’s – Randall is maybe my favorite cartoonist. So I very rarely post cartoons onto social media; 100% of them are Randall’s stuff.
+CHRISTINA WARREN: 100%. 
+KEVIN SCOTT: And so, once a month, once every other month, like he’ll write something that I just think is so fabulously funny that I have to share it with my other nerd friends.
+CHRISTINA WARREN: No, I mean, well – well that – well, that’s what makes the comic so good is – and – and you know, I’m interested to hear what you two talk about. But it’s such a – it covers such a wide spectrum of – of nerd-adjacent topics. And – and because the comic’s been going on so long, they’re literally – it’s like The Simpsons There literally is one for everything. You know, like there’s – there’s an xkcd that you can apply to any situation.
+.......
+.......
+.......
+
+Output:
+In question in requirement, the main topic is about the impact of privacy laws on technology development. Thus we extract "impact of privacy laws on technology development" related information from the raw content. And constructed a hierarchical summary based on the extracted information.
+	1.	First-Level Summary 1: AI Technology and Regulatory Challenges
+	•	The podcast explores the complex relationship between AI advancements and existing legal frameworks, with a particular focus on privacy laws like HIPAA and how they interact with technological innovation.
+(1) Second-Level Summary 1: Regulatory Concerns in Financial Services
+	•	Ethan Mollick highlights concerns that the current regulatory environment in financial services is not well-suited to address the unique challenges posed by AI, particularly the uncertainty surrounding the applicability of existing regulations.
+	•	(a) Third-Level Summary 1: Innovation Hindered by Regulatory Ambiguity
+	•	Mollick discusses how the lack of clarity in regulations impedes the ability of industries, like finance, to fully harness the potential of AI technologies.
+	•	(b) Third-Level Summary 1: Need for Adaptive Regulations
+	•	He advocates for a more dynamic and responsive regulatory framework that can evolve alongside technological advancements, ensuring both safety and innovation.
+(2) Second-Level Summary 2: AI in Healthcare and Privacy Concerns
+	•	The podcast also delves into the intersection of AI experimentation in healthcare and the need to comply with privacy regulations like HIPAA.
+	•	(a) Third-Level Summary 2: Balancing Privacy and AI Benefits
+	•	Discussions emphasize the challenge of ensuring privacy while leveraging AI to improve healthcare systems and access to medical services.
+	•	(b) Third-Level Summary 2: Ethical Considerations in AI Use
+	•	Mollick touches on concerns over AI misuse, such as “data rape,” and underscores the importance of regulating AI to promote positive outcomes while preventing harmful practices.
+	2.	First-Level Summary 2: The Call for Responsive AI Regulation
+	•	Mollick and other guests advocate for a regulatory approach that allows for experimentation and innovation, particularly in areas like healthcare, while mitigating potential risks.
+(1) Second-Level Summary 1: The Need for Smart and Responsive Regulation
+	•	Mollick calls for a “fast, smart, responsive regulation” that monitors emerging harms in AI and carves out space for experimentation in critical sectors like medicine.
+	•	(a) Third-Level Summary 1: Evolving with Technological Advancements
+	•	He stresses that regulations must evolve as quickly as the technology itself to ensure they are effective in addressing both the opportunities and risks associated with AI.
+(2) Second-Level Summary 2: AI as a General-Purpose Technology
+	•	The conversation highlights the far-reaching implications of AI, recognizing it as a general-purpose technology with the potential to significantly impact various sectors.
+	•	(a) Third-Level Summary 2: Promoting Innovation While Protecting Rights
+	•	Experts argue that while privacy laws are crucial to prevent misuse, they must also be flexible enough to allow for innovation, ensuring AI’s positive potential is not stifled.
+	•	(b) Third-Level Summary 2: The Need for Balance
+	•	The guests suggest that a balanced approach to regulation is necessary, one that promotes innovation while protecting individual rights and societal interests.
+	3.	First-Level Summary 3: Conclusion on the Future of AI Regulation
+	•	The episode concludes with a call for a balanced regulatory framework that can adapt to the evolving nature of AI, ensuring that both privacy and innovation are protected.
+(1) Second-Level Summary 1: Regulatory Agility for AI’s Future
+	•	Experts emphasize that regulations must be agile enough to keep pace with AI developments, ensuring that the technology can be used safely while minimizing potential harms.
+	•	(a) Third-Level Summary 1: Agility in Regulation
+	•	The need for regulatory frameworks that evolve in tandem with technological advancements is underscored as a key factor in supporting AI’s positive societal impact.
+#################
+#################
+
+Requirement:
+{{$instruction}}
+
+Raw Content:
+{{$raw_content}}
+
+Output:
