@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         package: 
-        - KernelMemory.StructRag
+        - KernelMemory.StructRAG
 
     steps:
     - uses: actions/checkout@v4
