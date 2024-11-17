@@ -51,12 +51,6 @@ var memory = new KernelMemoryBuilder()
 
 Then use as usual... =)
 
-## Usage
-
-1. Create you agent description file in yaml: 
-    
-    ```
-
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
