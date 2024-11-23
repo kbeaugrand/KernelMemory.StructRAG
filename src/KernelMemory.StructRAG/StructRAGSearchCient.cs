@@ -98,9 +98,127 @@ public sealed class StructRAGSearchCient : ISearchClient
                                    .ConfigureAwait(false);
     }
 
-    public Task<SearchResult> SearchAsync(string index, string query, ICollection<MemoryFilter>? filters = null, double minRelevance = 0, int limit = -1, IContext? context = null, CancellationToken cancellationToken = default)
+    /// <inheritdoc />
+    public async Task<SearchResult> SearchAsync(
+        string index,
+        string query,
+        ICollection<MemoryFilter>? filters = null,
+        double minRelevance = 0,
+        int limit = -1,
+        IContext? context = null,
+        CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        if (limit <= 0) { limit = this._config.MaxMatchesCount; }
+
+        var result = new SearchResult
+        {
+            Query = query,
+            Results = []
+        };
+
+        if (string.IsNullOrWhiteSpace(query) && (filters == null || filters.Count == 0))
+        {
+            this._log.LogWarning("No query or filters provided");
+            return result;
+        }
+
+        var list = new List<(MemoryRecord memory, double relevance)>();
+        if (!string.IsNullOrEmpty(query))
+        {
+            this._log.LogTrace("Fetching relevant memories by similarity, min relevance {0}", minRelevance);
+            IAsyncEnumerable<(MemoryRecord, double)> matches = this._memoryDb.GetSimilarListAsync(
+                index: index,
+                text: query,
+                filters: filters,
+                minRelevance: minRelevance,
+                limit: limit,
+                withEmbeddings: false,
+                cancellationToken: cancellationToken);
+
+            // Memories are sorted by relevance, starting from the most relevant
+            await foreach ((MemoryRecord memory, double relevance) in matches.ConfigureAwait(false))
+            {
+                list.Add((memory, relevance));
+            }
+        }
+        else
+        {
+            this._log.LogTrace("Fetching relevant memories by filtering");
+            IAsyncEnumerable<MemoryRecord> matches = this._memoryDb.GetListAsync(
+                index: index,
+                filters: filters,
+                limit: limit,
+                withEmbeddings: false,
+                cancellationToken: cancellationToken);
+
+            await foreach (MemoryRecord memory in matches.ConfigureAwait(false))
+            {
+                list.Add((memory, float.MinValue));
+            }
+        }
+
+        // Memories are sorted by relevance, starting from the most relevant
+        foreach ((MemoryRecord memory, double relevance) in list)
+        {
+            // Note: a document can be composed by multiple files
+            string documentId = memory.GetDocumentId(this._log);
+
+            // Identify the file in case there are multiple files
+            string fileId = memory.GetFileId(this._log);
+
+            // Note: this is not a URL and perhaps could be dropped. For now it acts as a unique identifier. See also SourceUrl.
+            string linkToFile = $"{index}/{documentId}/{fileId}";
+
+            var partitionText = memory.GetPartitionText(this._log).Trim();
+            if (string.IsNullOrEmpty(partitionText))
+            {
+                this._log.LogError("The document partition is empty, doc: {0}", memory.Id);
+                continue;
+            }
+
+            // Relevance is `float.MinValue` when search uses only filters and no embeddings (see code above)
+            if (relevance > float.MinValue) { this._log.LogTrace("Adding result with relevance {0}", relevance); }
+
+            // If the file is already in the list of citations, only add the partition
+            var citation = result.Results.FirstOrDefault(x => x.Link == linkToFile);
+            if (citation == null)
+            {
+                citation = new Citation();
+                result.Results.Add(citation);
+            }
+
+            // Add the partition to the list of citations
+            citation.Index = index;
+            citation.DocumentId = documentId;
+            citation.FileId = fileId;
+            citation.Link = linkToFile;
+            citation.SourceContentType = memory.GetFileContentType(this._log);
+            citation.SourceName = memory.GetFileName(this._log);
+            citation.SourceUrl = memory.GetWebPageUrl(index);
+
+            citation.Partitions.Add(new Citation.Partition
+            {
+                Text = partitionText,
+                Relevance = (float)relevance,
+                PartitionNumber = memory.GetPartitionNumber(this._log),
+                SectionNumber = memory.GetSectionNumber(),
+                LastUpdate = memory.GetLastUpdate(),
+                Tags = memory.Tags,
+            });
+
+            // In cases where a buggy storage connector is returning too many records
+            if (result.Results.Count >= this._config.MaxMatchesCount)
+            {
+                break;
+            }
+        }
+
+        if (result.Results.Count == 0)
+        {
+            this._log.LogDebug("No memories found");
+        }
+
+        return result;
     }
 
     private async Task<IEnumerable<MemoryRecord>> GetSimilarRecordsAsync(string index, string question, ICollection<MemoryFilter>? filters = null, double minRelevance = 0, CancellationToken cancellationToken = default)
