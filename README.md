@@ -51,6 +51,10 @@ var memory = new KernelMemoryBuilder()
 
 Then use as usual... =)
 
+## Sample
+
+A sample can be found at [sample](./sample), it ingest some documents into a volatile memory database and ask a questions using Kernel Memory.
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
