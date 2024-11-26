@@ -42,7 +42,7 @@ public sealed class StructRAGSearchCient : ISearchClient
         var records = await GetSimilarRecordsAsync(index, question, filters, minRelevance, cancellationToken)
                                       .ConfigureAwait(false);
 
-        if (_log.IsEnabled(LogLevel.Trace))
+        if (_log.IsEnabled(LogLevel.Debug))
             _log.LogDebug("Found {0} relevant memories, maxRelevance: {1}, minRelevance: {2}", records.Count(), records.MaxBy(c => c.Relevance), records.MinBy(c => c.Relevance));
 
         if (!records.Any())
