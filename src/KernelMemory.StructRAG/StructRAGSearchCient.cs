@@ -37,8 +37,13 @@ public sealed class StructRAGSearchCient : ISearchClient
 
     public async Task<MemoryAnswer> AskAsync(string index, string question, ICollection<MemoryFilter>? filters = null, double minRelevance = 0, IContext? context = null, CancellationToken cancellationToken = default)
     {
+        _log.LogInformation("Asking question: {0}", question);
+
         var records = await GetSimilarRecordsAsync(index, question, filters, minRelevance, cancellationToken)
                                       .ConfigureAwait(false);
+
+        if (_log.IsEnabled(LogLevel.Trace))
+            _log.LogDebug("Found {0} relevant memories, maxRelevance: {1}, minRelevance: {2}", records.Count(), records.MaxBy(c => c.Relevance), records.MinBy(c => c.Relevance));
 
         if (!records.Any())
         {
@@ -49,20 +54,32 @@ public sealed class StructRAGSearchCient : ISearchClient
             };
         }
 
+        var effectiveRecords = records.Select(c => c.Record);
+
         // 1. router
-        var route = await Router(question, records, context, cancellationToken)
+        var route = await Router(question, effectiveRecords, context, cancellationToken)
                             .ConfigureAwait(false);
 
+        _log.LogInformation("Route: {0}", route);
+
         // 2. structurizer
-        (var instruction, var info) = await ConstructAsync(route, question, records, context, cancellationToken)
+        (var instruction, var info) = await ConstructAsync(route, question, effectiveRecords, context, cancellationToken)
                                             .ConfigureAwait(false);
+
+        if (_log.IsEnabled(LogLevel.Trace))
+            _log.LogTrace("Instruction: {0}\nInfo: {1}", instruction, info);
 
         // 3. utilizer
         var subqueries = await DecomposeAsync(instruction, info, context, cancellationToken)
                                         .ConfigureAwait(false);
 
+        if (_log.IsEnabled(LogLevel.Trace))
+            _log.LogTrace("Subqueries: {0}\n{1}", subqueries.Count(), string.Join(Environment.NewLine, subqueries));
+
         var subknowledges = await ExtractAsync(route, question, info, subqueries, context, cancellationToken)
                                         .ConfigureAwait(false);
+        if (_log.IsEnabled(LogLevel.Trace))
+            _log.LogTrace("Subknowledges: {0}\n{1}", subknowledges.Count(), string.Join(Environment.NewLine, subknowledges.Select(c => $"Subquery: {c.subquery}\nRetrieval results:\n{c.subknowledge}\n\n")));
 
         var answer = await MergeAsync(route, question, subknowledges, context, cancellationToken)
                                         .ConfigureAwait(false);
@@ -72,7 +89,7 @@ public sealed class StructRAGSearchCient : ISearchClient
             Question = question,
             Result = answer,
             NoResult = false,
-            RelevantSources = records
+            RelevantSources = effectiveRecords
                     .GroupBy(c => c.GetDocumentId())
                     .Select(c => new Citation
                     {
@@ -221,16 +238,16 @@ public sealed class StructRAGSearchCient : ISearchClient
         return result;
     }
 
-    private async Task<IEnumerable<MemoryRecord>> GetSimilarRecordsAsync(string index, string question, ICollection<MemoryFilter>? filters = null, double minRelevance = 0, CancellationToken cancellationToken = default)
+    private async Task<IEnumerable<(MemoryRecord Record, double Relevance)>> GetSimilarRecordsAsync(string index, string question, ICollection<MemoryFilter>? filters = null, double minRelevance = 0, CancellationToken cancellationToken = default)
     {
         var chunks = this._memoryDb.GetSimilarListAsync(index, question, filters, minRelevance, limit: this._config.MaxMatchesCount, false, cancellationToken)
                                          .ConfigureAwait(false);
 
-        var result = new List<MemoryRecord>();
+        var result = new List<(MemoryRecord record, double relevance)>();
 
         await foreach (var chunk in chunks)
         {
-            result.Add(chunk.Item1);
+            result.Add((chunk.Item1, chunk.Item2));
         }
 
         return result;
@@ -303,7 +320,7 @@ public sealed class StructRAGSearchCient : ISearchClient
             text.Append(x);
         }
 
-        return  (instruction, text.ToString());
+        return (instruction, text.ToString());
     }
 
     private async Task<IEnumerable<string>> DecomposeAsync(string instruction, string info, IContext? context, CancellationToken cancellationToken = default)
