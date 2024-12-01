@@ -70,7 +70,7 @@ public sealed class StructRAGSearchCient : ISearchClient
             _log.LogTrace("Instruction: {0}\nInfo: {1}", instruction, info);
 
         // 3. utilizer
-        var subqueries = await DecomposeAsync(instruction, info, context, cancellationToken)
+        var subqueries = await DecomposeAsync(question, info, context, cancellationToken)
                                         .ConfigureAwait(false);
 
         if (_log.IsEnabled(LogLevel.Trace))
@@ -301,7 +301,7 @@ public sealed class StructRAGSearchCient : ISearchClient
                 promptName = "ConstructCatalogue";
                 break;
             case "chunk":
-                instruction = "construct chunk";
+                instruction = question;
                 return (instruction, chunks);
 
             default:
@@ -363,7 +363,7 @@ public sealed class StructRAGSearchCient : ISearchClient
                     instruction = $"Instruction: According to the query, filter out information from the catalogue that can help answer the query.\nNote, carefully analyze the entities and relationships mentioned in the query and filter based on this information.\n\nCatalogues:{info}\n\nQuery:{subquery}\n\nOutput:";
                     break;
                 case "chunk":
-                    instruction = "Instruction:\nAnswer the Query based on the given Document.\n\nQuery:\n{composed_query}\n\nDocument:\n{chunk}\n\nOutput:";
+                    instruction = $"Instruction:\nAnswer the Query based on the given Document.\n\nQuery:\n{subquery}\n\nDocument:\n{info}\n\nOutput:";
                     break;
                 default:
                     throw new InvalidOperationException();
