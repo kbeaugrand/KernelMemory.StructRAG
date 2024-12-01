@@ -100,7 +100,7 @@ We can now do the same with StructRAG search client:
 
 ```cs
 var structRagMemory = memoryBuilder
-        .WithCustomSearchClient<StructRAGSearchCient>()
+        .WithStructRagSearchClient()
         .Build();
 
 answer = await memory.AskAsync(question);

@@ -59,7 +59,7 @@ Console.WriteLine("====");
 Console.WriteLine($"Faithfulness: {await evaluation.Evaluate(answer, new Dictionary<string, object?>())}");
 
 var structRagMemory = memoryBuilder
-        .WithCustomSearchClient<StructRAGSearchCient>()
+        .WithStructRagSearchClient()
         .Build();
 
 answer = await memory.AskAsync(question);
