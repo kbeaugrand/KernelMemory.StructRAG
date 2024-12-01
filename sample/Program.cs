@@ -56,7 +56,7 @@ Console.WriteLine("Standard Kernel Memory Answer");
 Console.WriteLine(answer.Result);
 
 Console.WriteLine("====");
-Console.WriteLine($"Faithfulness: {await evaluation.Evaluate(answer, new Dictionary<string, object?>())}");
+Console.WriteLine($"Faithfulness: {(await evaluation.EvaluateAsync(answer)).Score}");
 
 var structRagMemory = memoryBuilder
         .WithCustomSearchClient<StructRAGSearchCient>()
@@ -67,7 +67,7 @@ Console.WriteLine("StructRAG Memory Answer");
 Console.WriteLine(answer.Result);
 
 Console.WriteLine("====");
-Console.WriteLine($"Faithfulness: {await evaluation.Evaluate(answer, new Dictionary<string, object?>())}");
+Console.WriteLine($"Faithfulness: {(await evaluation.EvaluateAsync(answer)).Score}");
 
 Console.WriteLine("Press any key to exit");
 Console.ReadKey();
