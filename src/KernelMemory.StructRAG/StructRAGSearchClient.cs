@@ -1,7 +1,3 @@
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using DocumentFormat.OpenXml.EMMA;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.KernelMemory;
@@ -9,19 +5,22 @@ using Microsoft.KernelMemory.AI;
 using Microsoft.KernelMemory.Context;
 using Microsoft.KernelMemory.MemoryStorage;
 using Microsoft.KernelMemory.Search;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace KernelMemory.StructRAG;
 
 #pragma warning disable SKEXP0010 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 
-public sealed class StructRAGSearchCient : ISearchClient
+public sealed class StructRAGSearchClient : ISearchClient
 {
     private readonly IMemoryDb _memoryDb;
     private readonly ITextGenerator _textGenerator;
     private readonly SearchClientConfig _config;
-    private readonly ILogger<StructRAGSearchCient> _log;
+    private readonly ILogger<StructRAGSearchClient> _log;
 
-    public StructRAGSearchCient(
+    public StructRAGSearchClient(
         IMemoryDb memoryDb,
         ITextGenerator textGenerator,
         SearchClientConfig? config = null,
@@ -29,10 +28,15 @@ public sealed class StructRAGSearchCient : ISearchClient
     {
         this._memoryDb = memoryDb;
         this._textGenerator = textGenerator;
-        this._log = loggerFactory?.CreateLogger<StructRAGSearchCient>() ?? new NullLogger<StructRAGSearchCient>();
+        this._log = loggerFactory?.CreateLogger<StructRAGSearchClient>() ?? new NullLogger<StructRAGSearchClient>();
 
         this._config = config ?? new SearchClientConfig();
         this._config.Validate();
+    }
+
+    public async IAsyncEnumerable<MemoryAnswer> AskStreamingAsync(string index, string question, ICollection<MemoryFilter>? filters = null, double minRelevance = 0, IContext? context = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        yield return await AskAsync(index, question, filters, minRelevance, context, cancellationToken);
     }
 
     public async Task<MemoryAnswer> AskAsync(string index, string question, ICollection<MemoryFilter>? filters = null, double minRelevance = 0, IContext? context = null, CancellationToken cancellationToken = default)
@@ -310,6 +314,7 @@ public sealed class StructRAGSearchCient : ISearchClient
 
         var prompt = GetSKPrompt("StructRAG", promptName)
             .Replace("{{$instruction}}", question)
+            .Replace("{{$titles}}", string.Join(Environment.NewLine, records.Select(x => x.GetFileName())))
             .Replace("{{$raw_content}}", chunks);
 
         var text = new StringBuilder();

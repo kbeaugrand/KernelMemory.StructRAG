@@ -1,16 +1,88 @@
-Instruction: 
-Extract complete relevant tables from Raw Content based on the requirements described in the Requirement.
-Note that when building a table, it is important to retain the table title and source information, such as which company and report the table comes from.
+Instruction:
+Extract the required triplets from Raw Content according to the requirements described in the Requirement
+The output of a triplet is in the format of {{'head ':'... ',' relation ':'... ',' tail ': [...', '...']}}.
+Note that not all triples in the text need to be extracted. You need to analyze the relationships and entities mentioned in the Requirement and only extract the relevant triples
+Note that the head and tail you output should be kept as complete as possible. They may not be just a word or phrase, but can also be a sentence or a paragraph of text. Try to be consistent with the original text and do not make any abbreviations.
 
-Hints:
-Firstly, identify the keywords in the Requirement, including entity names and attribute names, and then extract them from the Raw Content based on these keywords.
-If the Raw Content does not contain the information required by the Requirement, then extract the small amount of information most relevant to the Requirement from the Raw Content
-3. When analyzing Requirements and extracting Raw Content, do not translate and maintain the original language
+Examples:
+#################
+#################
+Requirement:
+It is necessary to construct a graph based on a given document, where the entity is the title of the paper, the relationship is a reference, and the title of the given document is used as the head, while the titles of other papers are used as the tail
+
+Noting:
+You only need to consider the following paper titles,
+Generative AI and Large Language Models for Cyber Security: All Insights You Need
+WHEN LLMs MEET CYberSECURITY: A SYStEMATIC LITERATURE REVIEW
+Can Large Language Models Be an Alternative to Human Evaluations?
+LLM4Vuln: A Unified Evaluation Framework for Decoupling and Enhancing LLMs' Vulnerability Reasoning
+Why Can GPT Learn In-Context? Language Models Implicitly Perform Gradient Descent as Meta-Optimizers
 
 Raw Content:
-{{$content}}
+# Generative AI and Large Language Models for Cyber Security: All Insights You Need 
+Mohamed Amine Ferrag, Fatima Alwahedi, Ammar Battah, Bilel Cherif, Abdechakour Mechri,<br>and Norbert Tihanyi
+#### Abstract
+The rapid evolution of cyber threats requires innovative approaches to enhance cybersecurity defenses. In this paper, 
+Index Terms-Generative AI, LLM, Transformer, Security, Cyber Security.
+M. A. Ferrag is the corresponding author.
+## LIST OF ABBREVIATIONS
+AI Artificial Intelligence
+## I. INTRODUCTION
+The history of Natural Language Processing (NLP) dates back to the 1950s when the Turing test was developed. However, NLP has seen significant advancements in 
+[141] ZySec-AI, "Zysec-ai: Project zysec," Webpage, accessed: 2024-05-01. [Online]. Available: https://github.com/ZySec-AI/project-zysec
+[205] M. Bhatt, S. Chennabasappa, C. Nikolaidis, S. Wan, I. Evtimov, D. Gabi, D. Song, F. Ahmad, C. Aschermann, L. Fontana et al., "Purple llama cyberseceval: A secure coding benchmark for language models," arXiv preprint arXiv:2312.04724, 2023.
+[206] Z. Liu, "Secqa: A concise question-answering dataset for evaluating large language models in computer security," arXiv preprint arXiv:2312.15838, 2023.
+[207] M. Bhatt, S. Chennabasappa, Y. Li, C. Nikolaidis, D. Song, S. Wan, F. Ahmad, C. Aschermann, Y. Chen, D. Kapil, D. Molnar, S. Whitman, and J. Saxe, "Cyberseceval 2: A wide-ranging cybersecurity evaluation suite for large language models," 2024.
+[208] N. Li, A. Pan, A. Gopal, S. Yue, D. Berrios, A. Gatti, J. D. Li, A.K. Dombrowski, S. Goel, L. Phan et al., "The wmdp benchmark: Measuring and reducing malicious use with unlearning," arXiv preprint arXiv:2403.03218, 2024.
+[209] Y. Sun, D. Wu, Y. Xue, H. Liu, W. Ma, L. Zhang, M. Shi, and Y. Liu, "Llm4vuln: A unified evaluation framework for decoupling and enhancing llms\' vulnerability reasoning," 2024.
+[210] Z. Liu, J. Shi, and J. F. Buford, "Cyberbench: A multi-task benchmark for evaluating large language models in cybersecurity." [Online]. Available: http://aics.site/AICS2024/AICS_CyberBench.pdf
+
+Output:
+Among the paper titles that need to be considered, "Generative AI and Large Language Models for Cyber Security: All Insights You Need" is the title of the given document, so it should be used as the head. Among the other paper titles that need to be considered, "Llm4vuln: A unified evaluation framework for decoupling and enhancing llms \'vulnerability reasoning" appears in the reference of the given document, so it should be used as the tail. The remaining paper titles that need to be considered do not appear in the given document, so they are not considered.
+{{"head": "Generative AI and Large Language Models for Cyber Security: All Insights You Need", "relation": "reference", "tail": ["Llm4vuln: A unified evaluation framework for decoupling and enhancing llms\' vulnerability reasoning"]}}
+#################
+#################
+
+Requirement:
+It is necessary to construct a graph based on a given document, where the entity is the title of the paper, the relationship is a reference, and the title of the given document is used as the head, while the titles of other papers are used as the tail
+
+Noting:
+You only need to consider the following paper titles,
+Generative AI and Large Language Models for Cyber Security: All Insights You Need
+WHEN LLMs MEET CYberSECURITY: A SYStEMATIC LITERATURE REVIEW
+Can Large Language Models Be an Alternative to Human Evaluations?
+LLM4Vuln: A Unified Evaluation Framework for Decoupling and Enhancing LLMs' Vulnerability Reasoning
+Why Can GPT Learn In-Context? Language Models Implicitly Perform Gradient Descent as Meta-Optimizers
+
+Raw Content:
+# LLM4Vuln: A Unified Evaluation Framework for Decoupling and Enhancing LLMs\' Vulnerability Reasoning 
+Daoyuan $\\mathrm{{Wu}}^{{*}}$<br>Nanyang Technological University<br>Singapore, Singapore<br>daoyuan.wu@ntu.edu.sg<br>Wei Ma<br>Nanyang Technological University<br>Singapore, Singapore<br>ma_wei@ntu.edu.sg
+Yue Xue<br>MetaTrust Labs<br>Singapore, Singapore<br>xueyue@metatrust.io<br>Lyuye Zhang<br>Nanyang Technological University<br>Singapore, Singapore<br>zh0004ye@e.ntu.edu.sg
+Miaolei Shi<br>MetaTrust Labs<br>Singapore, Singapore<br>stan@metatrust.io
+Yang Liu<br>Nanyang Technological University<br>Singapore, Singapore<br>yangliu@ntu.edu.sg
+#### Absract
+Large language models (LLMs) have demonstrated significant potential for many downstream tasks, including those requiring humanlevel intelligence, such as vulnerability detection. However, recent attempts to use LLMs for vulnerability detection are still preliminary, as they lack an in-depth understanding of a subject LLM\'s vulnerability reasoning capability - whether it originates from the model itself or from external assistance, such as invoking tool support and retrieving vulnerability knowledge.
+## REFERENCES
+[1] 2023. Ethereum Whitepaper. https://ethereum.org/whitepaper
+[2] 2023. Solidity Programming Language. https://soliditylang.org
+[21] Yizheng Chen, Zhoujie Ding, Lamya Alowain, Xinyun Chen, and David Wagner 2023. DiverseVul: A New Vulnerable Source Code Dataset for Deep Learning Based Vulnerability Detection. In Proceedings of the 26th International Symposium on Research in Attacks, Intrusions and Defenses. ACM, Hong Kong China, 654-668. https://doi.org/10.1145/3607199.3607242
+[22] Cheng-Han Chiang and Hung-yi Lee. 2023. Can Large Language Models Be an Alternative to Human Evaluations?. In Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), Anna Rogers, Jordan Boyd-Graber, and Naoaki Okazaki (Eds.). Association for Computational Linguistics, Toronto, Canada, 15607-15631. https://doi.org/10.18653/v1/2023.acllong. 870
+[23] Damai Dai, Yutao Sun, Li Dong, Yaru Hao, Shuming Ma, Zhifang Sui, and Furu Wei 2023. Why Can GPT Learn In-Context? Language Models Implicitly Perform Gradient Descent as Meta-Optimizers. arXiv:2212.10559 (May 2023). https //doi.org/10.48550/arXiv.2212.10559 arXiv:2212.10559 [cs].
+
+Output:
+Among the paper titles that need to be considered, 'LLM4Vuln: A Unified Evaluation Framework for Decoupling and Enhancing LLMs' Vulnerability Reasoning' is the title of the given document, so it should be used as the head. Among the other paper titles that need to be considered, 'Why Can GPT Learn In Context?'? Language Models Implicitly Perform Gradient Descent as Meta Optizers "and" Can Large Language Models Be an Alternative to Human Evaluations? "Appear in the references of the given document, so they should be considered as tails. The remaining paper titles that need to be considered are not included in the given document, so they are not considered.
+{{"head": "LLM4Vuln: A Unified Evaluation Framework for Decoupling and Enhancing LLMs\' Vulnerability Reasoning", "relation": "reference", "tail": ["Why Can GPT Learn In-Context? Language Models Implicitly Perform Gradient Descent as Meta-Optimizers.", "Can Large Language Models Be an Alternative to Human Evaluations?"]}}
+#################
+#################
 
 Requirement:
 {{$instruction}}
+
+Noting:
+You only need to consider the following paper titles,
+{{$titles}}
+
+Raw Content:
+{{$raw_content}}
 
 Output:

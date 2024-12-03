@@ -9,8 +9,8 @@
 
   <ItemGroup>
     <PackageReference Include="KernelMemory.Evaluation" Version="0.0.4" />
-    <PackageReference Include="Microsoft.KernelMemory.AI.AzureOpenAI" Version="0.93.241118.1" />
-    <PackageReference Include="Microsoft.KernelMemory.Core" Version="0.93.241118.1" />
+    <PackageReference Include="Microsoft.KernelMemory.AI.AzureOpenAI" Version="0.94.241201.1" />
+    <PackageReference Include="Microsoft.KernelMemory.Core" Version="0.94.241201.1" />
   </ItemGroup>
 
   <ItemGroup>
