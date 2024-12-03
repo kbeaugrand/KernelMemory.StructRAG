@@ -35,6 +35,11 @@ public sealed class StructRAGSearchCient : ISearchClient
         this._config.Validate();
     }
 
+    public async IAsyncEnumerable<MemoryAnswer> AskStreamingAsync(string index, string question, ICollection<MemoryFilter>? filters = null, double minRelevance = 0, IContext? context = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        yield return await AskAsync(index, question, filters, minRelevance, context, cancellationToken);
+    }
+
     public async Task<MemoryAnswer> AskAsync(string index, string question, ICollection<MemoryFilter>? filters = null, double minRelevance = 0, IContext? context = null, CancellationToken cancellationToken = default)
     {
         _log.LogInformation("Asking question: {0}", question);
