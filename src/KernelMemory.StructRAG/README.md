@@ -33,7 +33,7 @@ using KernelMemory.StructRAG;
 
 var memory = new KernelMemoryBuilder()
     .WithOpenAIDefaults(Environment.GetEnvironmentVariable("OPENAI_API_KEY"))
-    .WithCustomSearchClient<StructRAGSearchCient>()
+    .WithCustomSearchClient<StructRAGSearchClient>()
     .Build<MemoryServerless>();
 ```
 
