@@ -62,7 +62,7 @@ var structRagMemory = memoryBuilder
         .WithStructRagSearchClient()
         .Build();
 
-answer = await memory.AskAsync(question);
+answer = await structRagMemory.AskAsync(question);
 Console.WriteLine("StructRAG Memory Answer");
 Console.WriteLine(answer.Result);
 
