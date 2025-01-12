@@ -7,7 +7,6 @@ public static class IKernelMemoryBuilderExtension
 {
     public static IKernelMemoryBuilder WithStructRagSearchClient(this IKernelMemoryBuilder builder)
     {
-        return builder.WithCustomSearchClient<StructRAGSearchCient>();
+        return builder.WithCustomSearchClient<StructRAGSearchClient>();
     }
 }
-

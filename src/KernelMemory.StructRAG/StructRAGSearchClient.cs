@@ -14,14 +14,14 @@ namespace KernelMemory.StructRAG;
 
 #pragma warning disable SKEXP0010 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 
-public sealed class StructRAGSearchCient : ISearchClient
+public sealed class StructRAGSearchClient : ISearchClient
 {
     private readonly IMemoryDb _memoryDb;
     private readonly ITextGenerator _textGenerator;
     private readonly SearchClientConfig _config;
-    private readonly ILogger<StructRAGSearchCient> _log;
+    private readonly ILogger<StructRAGSearchClient> _log;
 
-    public StructRAGSearchCient(
+    public StructRAGSearchClient(
         IMemoryDb memoryDb,
         ITextGenerator textGenerator,
         SearchClientConfig? config = null,
@@ -29,7 +29,7 @@ public sealed class StructRAGSearchCient : ISearchClient
     {
         this._memoryDb = memoryDb;
         this._textGenerator = textGenerator;
-        this._log = loggerFactory?.CreateLogger<StructRAGSearchCient>() ?? new NullLogger<StructRAGSearchCient>();
+        this._log = loggerFactory?.CreateLogger<StructRAGSearchClient>() ?? new NullLogger<StructRAGSearchClient>();
 
         this._config = config ?? new SearchClientConfig();
         this._config.Validate();
