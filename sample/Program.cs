@@ -4,6 +4,7 @@ using KernelMemory.Evaluation.Evaluators;
 using KernelMemory.StructRAG;
 using Microsoft.Extensions.Configuration;
 using Microsoft.KernelMemory;
+using Microsoft.KernelMemory.Configuration;
 using Microsoft.KernelMemory.FileSystem.DevTools;
 using Microsoft.KernelMemory.MemoryStorage.DevTools;
 using Microsoft.SemanticKernel;
@@ -31,6 +32,12 @@ var memoryBuilder = new KernelMemoryBuilder()
     {
         AnswerTokens = 4096
     })
+    .WithCustomTextPartitioningOptions(new TextPartitioningOptions()
+    {
+        MaxTokensPerLine = 100,
+        MaxTokensPerParagraph = 200,
+        OverlappingTokens = 25
+    })
     .WithSimpleTextDb(new SimpleTextDbConfig()
     {
         StorageType = FileSystemTypes.Volatile
@@ -50,7 +57,7 @@ await memory
 
 var question = "In the current landscape where privacy laws are becoming increasingly stringent, and the global economy is experiencing a downturn, how can a technology company strategically leverage advancements in artificial intelligence (AI) to maintain competitive advantage and financial stability?";
 
-var answer = await memory.AskAsync(question);
+var answer = await memory.AskAsync(question, minRelevance: 0.9);
 
 Console.WriteLine("Standard Kernel Memory Answer");
 Console.WriteLine(answer.Result);

@@ -1,7 +1,3 @@
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using DocumentFormat.OpenXml.EMMA;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.KernelMemory;
@@ -9,6 +5,9 @@ using Microsoft.KernelMemory.AI;
 using Microsoft.KernelMemory.Context;
 using Microsoft.KernelMemory.MemoryStorage;
 using Microsoft.KernelMemory.Search;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace KernelMemory.StructRAG;
 
@@ -315,6 +314,7 @@ public sealed class StructRAGSearchClient : ISearchClient
 
         var prompt = GetSKPrompt("StructRAG", promptName)
             .Replace("{{$instruction}}", question)
+            .Replace("{{$titles}}", string.Join(Environment.NewLine, records.Select(x => x.GetFileName())))
             .Replace("{{$raw_content}}", chunks);
 
         var text = new StringBuilder();
