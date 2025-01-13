@@ -10,4 +10,3 @@ public static class IKernelMemoryBuilderExtension
         return builder.WithCustomSearchClient<StructRAGSearchClient>();
     }
 }
-
