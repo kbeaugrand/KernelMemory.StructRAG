@@ -47,7 +47,7 @@ public sealed class StructRAGSearchClient : ISearchClient
                                       .ConfigureAwait(false);
 
         if (_log.IsEnabled(LogLevel.Debug))
-            _log.LogDebug("Found {0} relevant memories, maxRelevance: {1}, minRelevance: {2}", records.Count(), records.MaxBy(c => c.Relevance), records.MinBy(c => c.Relevance));
+            _log.LogDebug("Found {0} relevant memories, maxRelevance: {1}, minRelevance: {2}", records.Count(), records.MaxBy(c => c.Relevance).Relevance, records.MinBy(c => c.Relevance).Relevance);
 
         if (!records.Any())
         {
