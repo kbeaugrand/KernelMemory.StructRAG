@@ -3,6 +3,7 @@
 using KernelMemory.Evaluation.Evaluators;
 using KernelMemory.StructRAG;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.KernelMemory;
 using Microsoft.KernelMemory.Configuration;
 using Microsoft.KernelMemory.FileSystem.DevTools;
@@ -17,6 +18,17 @@ IConfiguration configurationBuilder = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
     .AddEnvironmentVariables()
     .Build();
+
+ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
+{
+    builder
+        .ClearProviders()
+        .AddConsole()
+        .AddConfiguration(configurationBuilder.GetSection("Logging"));
+});
+
+var memoryLogger = loggerFactory.CreateLogger("Standard Kernel Memory");
+var structRagLogger = loggerFactory.CreateLogger("StructRAG Kernel Memory");
 
 configurationBuilder.GetSection("AzureOpenAICompletion")
                 .Bind(completionConfig);
@@ -43,6 +55,8 @@ var memoryBuilder = new KernelMemoryBuilder()
         StorageType = FileSystemTypes.Volatile
     });
 
+memoryBuilder.AddSingleton(loggerFactory);
+
 var evaluation = new FaithfulnessEvaluator(Kernel.CreateBuilder()
                                                 .AddAzureOpenAIChatCompletion(evaluationConfig.Deployment, evaluationConfig.Endpoint, evaluationConfig.APIKey)
                                                 .Build());
@@ -59,11 +73,8 @@ var question = "In the current landscape where privacy laws are becoming increas
 
 var answer = await memory.AskAsync(question, minRelevance: 0.9);
 
-Console.WriteLine("Standard Kernel Memory Answer");
-Console.WriteLine(answer.Result);
-
-Console.WriteLine("====");
-Console.WriteLine($"Faithfulness: {(await evaluation.EvaluateAsync(answer)).Score}");
+memoryLogger.LogInformation(answer.Result);
+memoryLogger.LogInformation($"Faithfulness: {(await evaluation.EvaluateAsync(answer)).Score}");
 
 var structRagMemory = memoryBuilder
         .WithStructRagSearchClient()
@@ -73,8 +84,8 @@ answer = await structRagMemory.AskAsync(question);
 Console.WriteLine("StructRAG Memory Answer");
 Console.WriteLine(answer.Result);
 
-Console.WriteLine("====");
-Console.WriteLine($"Faithfulness: {(await evaluation.EvaluateAsync(answer)).Score}");
+structRagLogger.LogInformation(answer.Result);
+structRagLogger.LogInformation($"Faithfulness: {(await evaluation.EvaluateAsync(answer)).Score}");
 
 Console.WriteLine("Press any key to exit");
 Console.ReadKey();
