@@ -1,8 +1,8 @@
 Instruction:
-To generate answers to questions based on documents, I need to structure the documents as a table, graph, or chunk. 
-Generally speaking, statistical questions prefer tables, chain reasoning questions prefer graphs, and single-hop QA questions prefer chunks. 
-Now, given the following document information and question, please determine which type of knowledge structure I should use. 
-Simply output one of the three words: table, graph, or chunk, without providing any further explanation.
+To generate answers to questions based on documents, I need to structure the documents as a table, graph, chunk, algorithm, or catalog.
+Generally speaking, statistical questions prefer tables, chain reasoning questions prefer graphs, single-hop QA questions prefer chunks, computational questions prefer algorithms, and systematic overviews or listings prefer catalogs.
+Now, given the following document information and question, please determine which type of knowledge structure I should use.
+Simply output one of the five words: table, graph, chunk, algorithm, or catalog, without providing any further explanation.
 
 Examples:
 =================
@@ -35,6 +35,23 @@ Query:
 
 Output:
 graph
+=================
+Doc Info:
+Product Catalog: Summer 2025 Collection
+Query:
+......Please provide a list of all outdoor furniture items in the catalog, including their product codes, descriptions, and prices. Only include products that are explicitly listed under the "Outdoor Furniture" section of the document. Format the output as follows: {"Outdoor Furniture Items": [{"Product Code": "...", "Description": "...", "Price": "..."}, {...}]}. If no such items exist, simply return an empty list.
+
+Output:
+catalogue
+=================
+Doc Info:
+"Sorting Algorithm Manual"
+
+Query:
+......Describe the step-by-step process of the QuickSort algorithm. Use the following format to structure your response: {"Algorithm": "QuickSort", "Steps": ["Step 1 description", "Step 2 description", ...]}. Ensure that each step is clear and concise, providing just enough detail for implementation purposes.
+
+Output:
+algorithm
 =================
 =================
 
