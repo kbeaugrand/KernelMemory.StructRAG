@@ -1,7 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using KernelMemory.Evaluation.Evaluators;
-using KernelMemory.StructRAG;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.KernelMemory;
@@ -81,8 +80,6 @@ var structRagMemory = memoryBuilder
         .Build();
 
 answer = await structRagMemory.AskAsync(question);
-Console.WriteLine("StructRAG Memory Answer");
-Console.WriteLine(answer.Result);
 
 structRagLogger.LogInformation(answer.Result);
 structRagLogger.LogInformation($"Faithfulness: {(await evaluation.EvaluateAsync(answer)).Score}");
