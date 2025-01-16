@@ -8,9 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="KernelMemory.Evaluation" Version="0.0.4" />
-    <PackageReference Include="Microsoft.KernelMemory.AI.AzureOpenAI" Version="0.94.241201.1" />
-    <PackageReference Include="Microsoft.KernelMemory.Core" Version="0.94.241201.1" />
+    <!--<PackageReference Include="KernelMemory.Evaluation" Version="0.0.6" />-->
+    <PackageReference Include="Microsoft.KernelMemory.AI.AzureOpenAI" Version="0.90.241021.1" />
+    <PackageReference Include="Microsoft.KernelMemory.AI.Ollama" Version="0.90.241021.1" />
+    <PackageReference Include="Microsoft.KernelMemory.Core" Version="0.90.241021.1" />
+    <PackageReference Include="Microsoft.KernelMemory.MemoryDb.Qdrant" Version="0.90.241021.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,14 +23,23 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="data\AdvancementsinArtificialIntelligence.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Update="data\01.Overview.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="data\EffectsofEconomicDownturnonBusinessOperations.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Update="data\02.Revenue Breakdown %28in USD Millions%29.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="data\ImpactofPrivacyLawsonTechnologyDevelopment.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Update="data\03.Operating Margins.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="data\04.Research &amp; Development %28R&amp;D%29 Investment.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="data\05.Market Share.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="data\06.Employee Metrics.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

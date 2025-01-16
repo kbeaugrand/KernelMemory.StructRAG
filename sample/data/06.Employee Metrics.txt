@@ -1,0 +1,18 @@
+﻿# FictiveTech Inc. - Fiscal Year 2024
+
+## Employee Metrics
+
+- FictiveTech Inc.:
+
+	* Total Employees: 67,000 (+5% YoY)
+	* Revenue per Employee: $150,588
+
+- InnovateSys Ltd.:
+
+	* Total Employees: 75,000 (+7% YoY)
+	* Revenue per Employee: $176,667
+
+- DigitalEdge Corp.:
+
+	* Total Employees: 72,000 (+4% YoY)
+	* Revenue per Employee: $145,833
