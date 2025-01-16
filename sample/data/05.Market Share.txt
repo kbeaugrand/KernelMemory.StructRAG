@@ -1,0 +1,24 @@
+﻿# FictiveTech Inc. - Fiscal Year 2024
+
+## Market Share
+
+- Cloud Solutions:
+
+	* FictiveTech Inc.: 35%
+	* InnovateSys Ltd.: 30%
+	* DigitalEdge Corp.: 25%
+	* Others: 10%
+
+- Consumer Electronics:
+
+	* FictiveTech Inc.: 28%
+	* InnovateSys Ltd.: 22%
+	* DigitalEdge Corp.: 26%
+	* Others: 24%
+
+- Artificial Intelligence Services:
+
+	* FictiveTech Inc.: 38%
+	* InnovateSys Ltd.: 35%
+	* DigitalEdge Corp.: 22%
+	* Others: 5%

@@ -1,17 +1,15 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using KernelMemory.Evaluation.Evaluators;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.KernelMemory;
+using Microsoft.KernelMemory.AI.Ollama;
 using Microsoft.KernelMemory.Configuration;
-using Microsoft.KernelMemory.FileSystem.DevTools;
-using Microsoft.KernelMemory.MemoryStorage.DevTools;
-using Microsoft.SemanticKernel;
 
-var completionConfig = new AzureOpenAIConfig();
-var embeddingConfig = new AzureOpenAIConfig();
-var evaluationConfig = new AzureOpenAIConfig();
+var ollamaConfig = new OllamaConfig();
+var qdrantConfig = new QdrantConfig();
+
+var index = "demo-struct-rag";
 
 IConfiguration configurationBuilder = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
@@ -29,60 +27,73 @@ ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
 var memoryLogger = loggerFactory.CreateLogger("Standard Kernel Memory");
 var structRagLogger = loggerFactory.CreateLogger("StructRAG Kernel Memory");
 
-configurationBuilder.GetSection("AzureOpenAICompletion")
-                .Bind(completionConfig);
-configurationBuilder.GetSection("AzureOpenAIEmbedding")
-                .Bind(embeddingConfig);
-configurationBuilder.GetSection("AzureOpenAIEvaluationChatCompletion")
-                .Bind(evaluationConfig);
+configurationBuilder.GetSection("Ollama")
+                .Bind(ollamaConfig);
+configurationBuilder.GetSection("Qdrant")
+                .Bind(qdrantConfig);
 
 var memoryBuilder = new KernelMemoryBuilder()
-    .WithAzureOpenAITextEmbeddingGeneration(embeddingConfig)
-    .WithAzureOpenAITextGeneration(completionConfig)
+    .WithOllamaTextGeneration(ollamaConfig)
+    .WithOllamaTextEmbeddingGeneration(ollamaConfig)
     .WithSearchClientConfig(new SearchClientConfig()
     {
-        AnswerTokens = 4096
+        AnswerTokens = 4096        
     })
     .WithCustomTextPartitioningOptions(new TextPartitioningOptions()
     {
         MaxTokensPerLine = 100,
-        MaxTokensPerParagraph = 200,
-        OverlappingTokens = 25
+        MaxTokensPerParagraph = 500,
+        OverlappingTokens = 50
     })
-    .WithSimpleTextDb(new SimpleTextDbConfig()
-    {
-        StorageType = FileSystemTypes.Volatile
-    });
+    .WithQdrantMemoryDb(qdrantConfig);
 
 memoryBuilder.AddSingleton(loggerFactory);
 
-var evaluation = new FaithfulnessEvaluator(Kernel.CreateBuilder()
-                                                .AddAzureOpenAIChatCompletion(evaluationConfig.Deployment, evaluationConfig.Endpoint, evaluationConfig.APIKey)
-                                                .Build());
-
 var memory = memoryBuilder.Build();
 
-await memory
-            .ImportDocumentAsync(new Document()
-                                    .AddFile("data/AdvancementsinArtificialIntelligence.txt")
-                                    .AddFile("data/EffectsofEconomicDownturnonBusinessOperations.txt")
-                                    .AddFile("data/ImpactofPrivacyLawsonTechnologyDevelopment.txt"));
+var indexes = await memory
+                        .ListIndexesAsync();
 
-var question = "In the current landscape where privacy laws are becoming increasingly stringent, and the global economy is experiencing a downturn, how can a technology company strategically leverage advancements in artificial intelligence (AI) to maintain competitive advantage and financial stability?";
+if (indexes.Any(i => String.Equals(i.Name, index, StringComparison.OrdinalIgnoreCase)))
+{
+    await memory.DeleteIndexAsync(index);
+}
 
-var answer = await memory.AskAsync(question, minRelevance: 0.9);
+var documentID = await memory
+                            .ImportDocumentAsync(new Document()
+                                                    .AddFile("data/01.Overview.txt")
+                                                    .AddFile("data/02.Revenue Breakdown (in USD Millions).txt")
+                                                    .AddFile("data/04.Research & Development (R&D) Investment.txt")
+                                                    .AddFile("data/06.Employee Metrics.txt"), index: index);
+
+var memoryFilter = MemoryFilters.ByDocument(documentID);
+
+var question = "In one simple sentence, comparing investments and revenues what is the most efficient company in artificial intelligence services among all the competitors?";
+
+memoryLogger.LogInformation("==========================================================================");
+
+var answer = await memory.AskAsync(question,
+                                    index: index,
+                                    filter: memoryFilter, 
+                                    minRelevance: .6f);
 
 memoryLogger.LogInformation(answer.Result);
-memoryLogger.LogInformation($"Faithfulness: {(await evaluation.EvaluateAsync(answer)).Score}");
+
+memoryLogger.LogInformation("Press any key to continue");
+Console.ReadKey();
+
+structRagLogger.LogInformation("==========================================================================");
 
 var structRagMemory = memoryBuilder
         .WithStructRagSearchClient()
         .Build();
 
-answer = await structRagMemory.AskAsync(question);
+answer = await structRagMemory.AskAsync(question,
+                                        index: index,
+                                        filter: memoryFilter,
+                                        minRelevance: .6f);
 
 structRagLogger.LogInformation(answer.Result);
-structRagLogger.LogInformation($"Faithfulness: {(await evaluation.EvaluateAsync(answer)).Score}");
 
-Console.WriteLine("Press any key to exit");
+structRagLogger.LogInformation("Press any key to exit");
 Console.ReadKey();

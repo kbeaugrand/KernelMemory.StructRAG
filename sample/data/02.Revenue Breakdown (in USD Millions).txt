@@ -1,0 +1,21 @@
+﻿# FictiveTech Inc. - Fiscal Year 2024
+
+## 02.Revenue Breakdown (in USD Millions)
+
+* FictiveTech Inc.: $13,500 (+8% YoY)
+
+	- Cloud Solutions: $6,500 (+15% YoY)
+	- Consumer Electronics: $4,300 (-5% YoY)
+	- Artificial Intelligence Services: $2,700 (+12% YoY)
+	 
+* InnovateSys Ltd.: $13,000 (+10% YoY)
+
+	- Cloud Solutions: $5,800 (+18% YoY)
+	- Consumer Electronics: $3,200 (-3% YoY)
+	- Artificial Intelligence Services: 4,000 (+15% YoY)
+
+* DigitalEdge Corp.: $10,500 (+6% YoY)
+
+	- Cloud Solutions: $5,200 (+10% YoY)
+	- Consumer Electronics: $3,800 (-2% YoY)
+	- Artificial Intelligence Services: $1,500 (+3% YoY)
