@@ -1,8 +1,8 @@
 Instruction:
-To generate answers to questions based on documents, I need to structure the documents as a table, graph, chunk, algorithm, or catalog.
+To generate answers to questions based on documents, I need to structure the documents as a table, graph, chunk, algorithm, or catalogue.
 Generally speaking, statistical questions prefer tables, chain reasoning questions prefer graphs, single-hop QA questions prefer chunks, computational questions prefer algorithms, and systematic overviews or listings prefer catalogs.
 Now, given the following document information and question, please determine which type of knowledge structure I should use.
-Simply output one of the five words: table, graph, chunk, algorithm, or catalog, without providing any further explanation.
+Simply output one of the five words: table, graph, chunk, algorithm, or catalogue, without providing any further explanation.
 
 Examples:
 =================
