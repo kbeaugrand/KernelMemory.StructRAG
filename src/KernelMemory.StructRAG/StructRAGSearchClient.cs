@@ -1,3 +1,5 @@
+using DocumentFormat.OpenXml.Office2010.Word;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.KernelMemory;
@@ -5,7 +7,9 @@ using Microsoft.KernelMemory.AI;
 using Microsoft.KernelMemory.Context;
 using Microsoft.KernelMemory.MemoryStorage;
 using Microsoft.KernelMemory.Search;
+using System;
 using System.Reflection;
+using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -93,21 +97,25 @@ public sealed class StructRAGSearchClient : ISearchClient
             Question = question,
             Result = answer,
             NoResult = false,
-            RelevantSources = effectiveRecords
-                    .GroupBy(c => c.GetDocumentId())
+            RelevantSources = records
+                    .GroupBy(c => c.Record.GetDocumentId())
                     .Select(c => new Citation
                     {
                         DocumentId = c.Key,
-                        FileId = c.First().GetFileId(),
+                        FileId = c.First().Record.GetFileId(),
                         Index = index,
-                        Link = c.First().GetWebPageUrl(index),
+                        Link = $"{index}/{c.Key}/{c.First().Record.GetFileId()}",
+                        SourceContentType = c.First().Record.GetFileContentType(this._log),
+                        SourceName = c.First().Record.GetFileName(this._log),
+                        SourceUrl = c.First().Record.GetWebPageUrl(index),
                         Partitions = c.Select(p => new Citation.Partition
                         {
-                            Text = p.GetPartitionText(),
-                            LastUpdate = p.GetLastUpdate(),
-                            PartitionNumber = p.GetPartitionNumber(),
-                            SectionNumber = p.GetSectionNumber(),
-                            Tags = p.Tags
+                            Text = p.Record.GetPartitionText(),
+                            LastUpdate = p.Record.GetLastUpdate(),
+                            Relevance = (float)p.Relevance,
+                            PartitionNumber = p.Record.GetPartitionNumber(),
+                            SectionNumber = p.Record.GetSectionNumber(),
+                            Tags = p.Record.Tags
                         }).ToList()
                     }).ToList()
         };
