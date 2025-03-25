@@ -58,8 +58,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.KernelMemory.Abstractions" Version="0.97.250211.1" />
-    <PackageReference Include="Microsoft.KernelMemory.Core" Version="0.97.250211.1" />
+    <PackageReference Include="Microsoft.KernelMemory.Abstractions" Version="0.98.250324.1" />
+    <PackageReference Include="Microsoft.KernelMemory.Core" Version="0.98.250324.1" />
   </ItemGroup>
 
 </Project>
