@@ -9,10 +9,10 @@
 
   <ItemGroup>
     <!--<PackageReference Include="KernelMemory.Evaluation" Version="0.0.6" />-->
-    <PackageReference Include="Microsoft.KernelMemory.AI.AzureOpenAI" Version="0.90.241021.1" />
-    <PackageReference Include="Microsoft.KernelMemory.AI.Ollama" Version="0.90.241021.1" />
-    <PackageReference Include="Microsoft.KernelMemory.Core" Version="0.90.241021.1" />
-    <PackageReference Include="Microsoft.KernelMemory.MemoryDb.Qdrant" Version="0.90.241021.1" />
+    <PackageReference Include="Microsoft.KernelMemory.AI.AzureOpenAI" Version="0.98.250508.3" />
+    <PackageReference Include="Microsoft.KernelMemory.AI.Ollama" Version="0.98.250508.3" />
+    <PackageReference Include="Microsoft.KernelMemory.Core" Version="0.98.250508.3" />
+    <PackageReference Include="Microsoft.KernelMemory.MemoryDb.Qdrant" Version="0.98.250508.3" />
   </ItemGroup>
 
   <ItemGroup>
